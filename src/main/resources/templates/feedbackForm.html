@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title id="pageTitle">Feedback Form</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+<div class="container my-5">
+    <div class="row">
+    <h2 class="mb-5">Feedback Form</h2>
+    </div>
+            <form action="#" th:action="@{/feedback/form/add}" th:object="${feedbackForm}" method="post">
+                <div class="row">
+                    <h1 th:if="${feedbackForm.issueId}" th:text="${' Issue id: ' + feedbackForm.issueId}">Title</h1>
+                </div>
+                    <div class="form-group " >
+                        <label for="name" class="col-form-label">Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Name">
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label for="email" class="col-form-label">Email</label>
+                        <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Email">
+                        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label for="feedback" class="col-form-label">Feedback</label>
+                        <textarea th:field="*{feedback}" class="form-control" rows="3" id="feedback" placeholder="Feedback"></textarea>
+                        <span th:if="${#fields.hasErrors('feedback')}" th:errors="*{feedback}" class="text-danger"></span>
+                    </div>
+                <div class="form-group col-md-6">
+                    <div class="g-recaptcha"
+                         th:attr="data-sitekey=${@captchaSettings.getKey()}"></div>
+                    <span th:if="${#fields.hasErrors('reCaptchaResponse')}" th:errors="*{reCaptchaResponse}" class="text-danger"></span>
+
+                </div>
+                <div class="form-group col-md-6">
+                 <button type="submit" class="btn btn-primary">Add Feedback</button>
+                </div>
+                <input type="hidden" id="issueId" th:field="*{issueId}" th:value="${feedbackForm.issueId}">
+            </form>
+        </div>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+</body>
+</html>

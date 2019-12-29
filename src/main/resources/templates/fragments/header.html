@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div th:fragment="header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary rounded">
+            <a class="navbar-brand" href="#">Logo here</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav nav ml-auto">
+                    <li class="nav-item active">
+                        <a id="navWelcomeLink"  class="nav-link" th:href="@{/issue/all}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="navBooksLink" class="nav-link" th:href="@{/issue/form}">Add Issue</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div th:if="${param.message != null}" class="alert alert-success">
+            <span th:text="${message}"></span>
+        </div>
+    </div>
+
+
+</body>
+</html>

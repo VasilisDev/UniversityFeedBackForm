@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title id="pageTitle">Issue Form</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+<div class="container my-5">
+    <h2 class="mb-5">Issue Form</h2>
+            <form action="#" th:action="@{/issue/form/add}" th:object="${issueForm}" method="post">
+                    <div class="form-group col-md-6">
+                        <label for="title" class="col-form-label">Title</label>
+                        <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="Title">
+                        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="description" class="col-form-label">Description</label>
+                        <textarea rows="3" th:field="*{description}" class="form-control" id="description" placeholder="Description"></textarea>
+                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
+                    </div>
+                <div class="form-group col-md-6">
+                    <div class="g-recaptcha"
+                         th:attr="data-sitekey=${@captchaSettings.getKey()}"></div>
+                    <span th:if="${#fields.hasErrors('reCaptchaResponse')}" th:errors="*{reCaptchaResponse}" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-primary">Add Issue</button>
+                </div>
+            </form>
+        </div>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+</body>
+</html>

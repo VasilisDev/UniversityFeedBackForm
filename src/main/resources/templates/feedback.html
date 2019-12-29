@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title id="pageTitle">Feedback</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+<div th:if="${msg}" th:text="${msg}" class="text-center" th:class="${'alert ' + alertClass}"></div>
+<div th:switch="${feedbacks.size()}" class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 th:case="0">No FeedBacks yet!</h2>
+            <div th:case="*">
+                <h2 class="my-5">Feedbacks</h2>
+                <div class="row">
+                    <h1 th:if="${issueId}" th:text="${'Issue id: ' + issueId}">Title</h1>
+                </div>
+                <table class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Respondent</th>
+                        <th>Feedback</th>
+                        <th>Created Date</th>
+                        <th>Updated Date</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="feedback : ${feedbacks}">
+                        <td th:text="${feedback.id}"></td>
+                        <td th:text="${feedback.name}"></td>
+                        <td th:text="${feedback.feedback}"></td>
+                        <td th:text="${#dates.format(feedback.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td th:text="${#dates.format(feedback.updatedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td>
+                            <a th:href="@{/feedback/update/issue/{issueId}/feedback/{feedbackId}(feedbackId=${feedback.id},issueId=${issueId}) }" class="btn btn-primary">update</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/feedback/delete/issue/{issueId}/feedback/{feedbackId}(feedbackId=${feedback.id},issueId=${issueId}) }" class="btn btn-primary">delete</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/email/issue/{issueId}/feedback/{feedbackId}(feedbackId=${feedback.id},issueId=${issueId}) }" class="btn btn-primary">Email FeedBack</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

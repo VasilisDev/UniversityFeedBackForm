@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title id="pageTitle">Email Feedback</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+<div th:if="${msg}" th:text="${msg}" class="text-center" th:class="${'alert ' + alertClass}"></div>
+<div class="container my-5">
+    <div class="row">
+        <h2 class="mb-5">Email Feedback Form</h2>
+    </div>
+
+    <form action="#" th:action="@{/email}" th:object="${emailForm}" method="post">
+        <div class="row">
+            <h1 th:if="${emailForm.issueId}" th:text="${'Issue id: ' + emailForm.issueId}">Title</h1>
+        </div>
+        <div class="row">
+            <h1 th:if="${emailForm.feedbackId}" th:text="${'Feedback id: ' + emailForm.feedbackId}">Title</h1>
+        </div>
+        <div class="form-group ">
+            <label for="senderEmail" class="col-form-label">sender Email</label>
+            <input type="email" th:field="*{senderEmail}" class="form-control" id="senderEmail" placeholder="sender Email">
+            <span th:if="${#fields.hasErrors('senderEmail')}" th:errors="*{senderEmail}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group ">
+            <label for="receiverEmail" class="col-form-label">Receiver Email</label>
+            <input type="email" th:value="${emailForm.receiverEmail}" th:field="*{receiverEmail}" class="form-control" id="receiverEmail" placeholder="Receiver Email">
+            <span th:if="${#fields.hasErrors('receiverEmail')}" th:errors="*{receiverEmail}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group ">
+            <label for="subject" class="col-form-label">subject</label>
+            <input type="text" th:field="*{subject}" class="form-control" id="subject" placeholder="subject">
+            <span th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group ">
+            <label for="body" class="col-form-label">Body</label>
+            <textarea  rows="3"  th:field="*{body}" class="form-control" id="body" placeholder="body"></textarea>
+            <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="g-recaptcha"
+                 th:attr="data-sitekey=${@captchaSettings.getKey()}"></div>
+            <span th:if="${#fields.hasErrors('reCaptchaResponse')}" th:errors="*{reCaptchaResponse}" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+        <input type="hidden" id="issueId" th:field="*{issueId}" th:value="${emailForm.issueId}">
+        <input type="hidden" id="feedbackId" th:field="*{feedbackId}" th:value="${emailForm.feedbackId}">
+
+    </form>
+</div>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+</body>
+</html>
